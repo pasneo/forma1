@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using forma1.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,21 +24,26 @@ namespace forma1.Controllers
 
     }
 
+
     public class AccountController : Controller
     {
 
-        private SignInManager<User> _signManager;
-        private UserManager<User> _userManager;
+        private SignInManager<User> signInManager;
+        private UserManager<User> userManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            _userManager = userManager;
-            _signManager = signManager;
+            userManager = userManager;
+            this.signInManager = signInManager;
         }
 
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(string returnUrl)
         {
-            await _signManager.SignOutAsync();
+            await signInManager.SignOutAsync();
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
             return RedirectToAction("Index", "Home");
         }
 
@@ -45,8 +51,13 @@ namespace forma1.Controllers
         {
             return View();
         }
-        public IActionResult Login(string returnUrl = "")
+        public IActionResult Login(string returnUrl)
         {
+            if (signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var model = new LoginViewModel { ReturnUrl = returnUrl };
             return View(model);
         }
@@ -56,7 +67,7 @@ namespace forma1.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signManager.PasswordSignInAsync(model.Username,
+                var result = await signInManager.PasswordSignInAsync(model.Username,
                    model.Password, false, false);
 
                 if (result.Succeeded)

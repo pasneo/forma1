@@ -23,6 +23,7 @@ namespace forma1.Data
                 new Team{Name="McLaren",YearFounded=1963,WorldChampionshipsWon=12,PaidEntryFee=true},
                 new Team{Name="Scuderia Ferrari",YearFounded=1929,WorldChampionshipsWon=238,PaidEntryFee=false}
                 };
+
                 foreach (Team t in teams)
                 {
                     context.Teams.Add(t);

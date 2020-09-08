@@ -9,18 +9,13 @@
         <span class="nav-link text-dark">Hi, @User.Identity.Name!</span>
     </li>
     <li class="nav-item">
-        <!--
-        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-        -->
-        <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Logout</a>
+        <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout" asp-route-returnurl="@ViewBag.ReturnUrl">Logout</a>
     </li>
 }
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
+        <a class="nav-link text-dark" asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewBag.ReturnUrl">Login</a>
     </li>
 }
 </ul>
