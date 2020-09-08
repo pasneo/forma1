@@ -29,11 +29,9 @@ namespace forma1.Controllers
     {
 
         private SignInManager<User> signInManager;
-        private UserManager<User> userManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(SignInManager<User> signInManager)
         {
-            userManager = userManager;
             this.signInManager = signInManager;
         }
 
