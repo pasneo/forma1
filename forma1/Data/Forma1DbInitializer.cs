@@ -10,7 +10,7 @@ namespace forma1.Data
 {
     public class Forma1DbInitializer
     {
-
+        // Fills the db on given context with some example teams and an admin user
         public static void Initialize(Forma1DbContext context)
         {
             context.Database.EnsureCreated();
@@ -21,7 +21,7 @@ namespace forma1.Data
                 var teams = new Team[]
                 {
                 new Team{Name="McLaren",YearFounded=1963,WorldChampionshipsWon=12,PaidEntryFee=true},
-                new Team{Name="Dummy",YearFounded=2020,WorldChampionshipsWon=0,PaidEntryFee=false}
+                new Team{Name="Scuderia Ferrari",YearFounded=1929,WorldChampionshipsWon=238,PaidEntryFee=false}
                 };
                 foreach (Team t in teams)
                 {

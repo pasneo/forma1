@@ -33,6 +33,7 @@ namespace forma1.Controllers
                 return RedirectToAction("Index");
 
             Team teamToDelete = DbContext.Teams.Find(id);
+
             if (teamToDelete != null)
             {
                 DbContext.Teams.Remove(teamToDelete);
@@ -49,6 +50,9 @@ namespace forma1.Controllers
                 return RedirectToAction("Index");
 
             Team teamToEdit = DbContext.Teams.Find(id);
+
+            if (teamToEdit == null) return RedirectToAction("Index");
+
             return View(teamToEdit);
         }
 
@@ -60,12 +64,15 @@ namespace forma1.Controllers
 
             Team originalTeam = DbContext.Teams.Find(team.ID);
 
-            originalTeam.Name = team.Name;
-            originalTeam.YearFounded = team.YearFounded;
-            originalTeam.WorldChampionshipsWon = team.WorldChampionshipsWon;
-            originalTeam.PaidEntryFee = team.PaidEntryFee;
+            if (originalTeam != null)
+            {
+                originalTeam.Name = team.Name;
+                originalTeam.YearFounded = team.YearFounded;
+                originalTeam.WorldChampionshipsWon = team.WorldChampionshipsWon;
+                originalTeam.PaidEntryFee = team.PaidEntryFee;
 
-            await DbContext.SaveChangesAsync();
+                await DbContext.SaveChangesAsync();
+            }
 
             return RedirectToAction("Index");
         }

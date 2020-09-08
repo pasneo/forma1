@@ -35,7 +35,6 @@ namespace forma1.Controllers
             _signManager = signManager;
         }
 
-        [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await _signManager.SignOutAsync();
